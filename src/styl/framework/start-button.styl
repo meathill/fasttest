@@ -1,0 +1,60 @@
+.start-button
+  margin auto 0
+  position relative
+
+$width = 254px
+
+#go-button
+  background: linear-gradient(to right top, #7975FF, #F95DFF);
+  color white
+  font-size: 54px
+  font-family: 'PingFang SC'
+  width $width
+  height $width
+  border-radius 50%
+  padding 0
+  border none
+  display: block
+  margin 0 auto
+  text-transform: uppercase
+  position relative
+  z-index: 2
+
+.spinner
+  width: $width
+  height: $width
+  position absolute
+  top 0
+  left 50%
+  margin-left: - ($width / 2)
+  pointer-events: none
+  background: linear-gradient(to right top, #7975FF, #F95DFF);
+  color white
+  border-radius: 100%;
+  animation: sk-scaleout 2s infinite ease-in-out;
+  padding 2px
+  z-index: 1
+
+.spinner-inner
+  background-color: #F5FAFE
+  border-radius: 100%
+  width: 100%
+  height: 100%
+
+.spinner-later
+  animation-delay: .5s
+
+@keyframes sk-scaleout
+  0%
+    -webkit-transform: scale(1);
+    transform: scale(1);
+
+  37.5%
+    -webkit-transform: scale(1.3149606299);
+    transform: scale(1.3149606299);
+    opacity: 0;
+
+  100%
+    -webkit-transform: scale(1.3149606299);
+    transform: scale(1.3149606299);
+    opacity: 0;

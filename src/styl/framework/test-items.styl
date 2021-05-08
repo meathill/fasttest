@@ -1,0 +1,39 @@
+.test-items
+  display: flex
+  flex-wrap: wrap
+  width: 828px
+  margin 0 auto
+
+  dt
+    margin-bottom: 9px
+
+  dd
+    margin: 0
+    display: flex
+
+.test-item
+  background-color: white
+  border-radius: 14px
+  box-shadow: 0 1px 6px #F2F4FC
+  display: flex
+  flex-direction column
+  width: 260px
+  height: 92px
+  margin-right: 24px
+  padding 0 20px
+  justify-content: center
+
+  &:nth-child(3n + 3)
+    margin-right: 0
+
+  &:nth-child(n + 4)
+    margin-top: 24px
+
+.star
+  background url(../../assets/star0.png)
+  display: block
+  width: 18px
+  height 18px
+
+  + .star
+    margin-left: 12px

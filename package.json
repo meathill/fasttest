@@ -31,6 +31,7 @@
   "dependencies": {
     "normalize.css": "^8.0.1",
     "postcss-loader": "^5.2.0",
+    "spinkit": "^2.0.1",
     "stylus": "^0.54.8"
   }
 }
