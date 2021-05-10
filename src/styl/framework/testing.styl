@@ -1,0 +1,48 @@
+.clock
+  background no-repeat url(../../assets/clock-bg.png) top right
+  width 420px
+  height 420px
+  margin auto
+  position: relative
+
+.speed-number,
+.speed-unit,
+.clock-progress
+  position absolute
+  left 0
+  width 100%
+  text-align: center
+
+.speed-number
+  font-family: 'D-Din condensed'
+  font-size: 58px
+  top 178px
+
+.speed-unit
+  color #AABCD1
+  top 234px
+
+.clock-progress
+  color #59556C
+  top 353px
+
+.clock-color
+  background no-repeat url(../../assets/speed-color.png)
+  background-size: contain
+  position: absolute
+  top 24px
+  left 33px
+  width: 354px
+  height 312px
+
+.clock-pointer
+  background no-repeat url(../../assets/pointer.png) top center
+  position: absolute
+  top 22px
+  left 50%
+  margin-left -6px
+  width: 12px
+  height 180px
+  transition: transform .2s
+  transform: rotate(45deg)
+  transform-origin bottom center

@@ -7,18 +7,25 @@ $width = 254px
 #go-button
   background: linear-gradient(to right top, #7975FF, #F95DFF);
   color white
+  cursor: pointer
   font-size: 54px
   font-family: 'PingFang SC'
-  width $width
-  height $width
-  border-radius 50%
-  padding 0
+  text-transform: uppercase
   border none
   display: block
+  border-radius 50%
+  padding 0
   margin 0 auto
-  text-transform: uppercase
   position relative
+  width $width
+  height $width
   z-index: 2
+
+  &:hover
+    background: linear-gradient(to right top, #9890FF, #EE80FF)
+
+  &:active
+    background: linear-gradient(to right top, #625ECD, #C54BCE)
 
 .spinner
   width: $width
