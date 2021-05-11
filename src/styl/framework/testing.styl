@@ -4,6 +4,7 @@
   height 420px
   margin auto
   position: relative
+  --speed: 0
 
 .speed-number,
 .speed-unit,
@@ -16,15 +17,15 @@
 .speed-number
   font-family: 'D-Din condensed'
   font-size: 58px
-  top 178px
+  top 168px
 
 .speed-unit
   color #AABCD1
-  top 234px
+  top 229px
 
 .clock-progress
   color #59556C
-  top 353px
+  top 348px
 
 .clock-color
   background no-repeat url(../../assets/speed-color.png)
@@ -34,15 +35,17 @@
   left 33px
   width: 354px
   height 312px
+  -webkit-mask-image url(../../assets/mask.svg)
+  transition: -webkit-mask-image .2s
 
 .clock-pointer
   background no-repeat url(../../assets/pointer.png) top center
   position: absolute
-  top 22px
+  top 24px
   left 50%
   margin-left -6px
   width: 12px
-  height 180px
+  height 176px
   transition: transform .2s
-  transform: rotate(45deg)
+  transform: rotate(calc(-135deg + (var(--speed) / 100 * 270deg)))
   transform-origin bottom center

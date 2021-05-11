@@ -1,5 +1,1 @@
-> 0.5%
-chrome >=70
-not dead
-not and_uc < 12
-last 5 edge version
+chrome >=85
