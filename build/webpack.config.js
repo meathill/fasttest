@@ -6,6 +6,7 @@ const {
 } = require('fs');
 const {DefinePlugin, IgnorePlugin} = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const cases = require('../src/data/case');
 
 /* global __dirname */
 const devMode = process.env.NODE_ENV !== 'production';
@@ -37,6 +38,9 @@ const plugins = [
   new HtmlWebpackPlugin({
     template: './src/template/index.pug',
     filename: 'index.html',
+    templateParameters: {
+      cases,
+    },
   }),
 ];
 

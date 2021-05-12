@@ -1,8 +1,44 @@
 import './styl/screen.styl';
+import cases from './data/case';
 
+const startButton = document.getElementById('go-button');
+const startSection = document.getElementById('start-section');
 const clock = document.getElementById('clock');
 const clockBg = document.getElementById('clock-color');
 const number = document.getElementById('speed-number');
+const result = document.getElementById('result');
+
+startButton.addEventListener('click', doStart);
+
+async function doStart() {
+  startSection.classList.add('animated', 'zoomOut');
+  await sleep(500);
+  startSection.hidden = true;
+  startSection.classList.remove('animated', 'zoomOut');
+  clock.hidden = false;
+
+  let score = 100;
+  for (const testCase of cases) {
+    try {
+      await new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.async = true;
+        script.onload = resolve;
+        script.onerror = reject;
+        script.src = testCase.link;
+        document.head.appendChild(script);
+      });
+    } catch (e) {
+      score -= 100 / cases.length;
+    }
+  }
+
+  clock.hidden = true;
+  result.hidden = false;
+}
+function sleep(duration) {
+  return new Promise(resolve => setTimeout(resolve, duration));
+}
 function showSpeed(speed) {
   if (speed > 100) {
     speed = 100;
