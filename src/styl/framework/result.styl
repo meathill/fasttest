@@ -1,26 +1,51 @@
 .result
-  margin auto
-  min-height: 420px
+  min-height var(--content-height)
+
+  @media (max-width 575px)
+    margin 0 auto
+
+  @media (min-width 576px)
+    margin auto
 
 .score
   background-color: white
   box-shadow: 0 0 30px rgba(#C5CDE9, .5)
-  width: 254px
-  height 162px
-  border-radius: 28px
   display: flex
   flex-direction: column
   align-items: center
 
+  @media (max-width 575px)
+    border-radius: 23px
+    width 212px
+    height 125px
+
+  @media (min-width 576px)
+    border-radius: 28px
+    width: 254px
+    height 162px
+
 .score-number
   font-family: 'D-Din condensed'
-  font-size: 72px
-  line-height: 120px
+
+  @media (max-width 575px)
+    font-size: 60px
+    line-height: 93px
+
+  @media (min-width 576px)
+    font-size: 72px
+    line-height: 120px
 
 .progress
   background-color: #E7E8FC
-  width: 190px
-  height 10px
+  margin 0 auto
+
+  @media (max-width 575px)
+    width 158px
+    height 8px
+
+  @media (min-width 576px)
+    width 190px
+    height 10px
 
 .progress-bar
   background-color: #7975FF
@@ -31,11 +56,7 @@
   color white
   cursor: pointer
   display: block
-  line-height: 44px
-  width: 162px
-  height: 44px
   border none
-  border-radius: 22px
   box-shadow: 0 2px 4px #C5C3CD
   padding: 0
   margin 24px auto 20px
@@ -48,12 +69,30 @@
     background-image: linear-gradient(to top right, #625ECD, #C54BCE)
     box-shadow: none
 
+  @media (max-width 575px)
+    border-radius: 20px
+    font-size: 14px
+    line-height: 40px
+    width 140px
+    height 40px
+
+  @media (min-width 576px)
+    border-radius: 22px
+    width: 162px
+    height: 44px
+    line-height: 44px
+
 .share-title
-  font-size: 16px
   font-weight: normal
   line-height: 38px
   text-align: center
   margin-bottom: 0
+
+  @media (max-width 575px)
+    font-size: 14px
+
+  @media (min-width 576px)
+    font-size: 16px
 
 .share-buttons
   display: flex
@@ -65,9 +104,15 @@
   border-radius: 50%
   cursor pointer
   display: block
-  width: 24px
-  height 24px
   padding: 0
 
   + .share-button
     margin-left: 10px
+
+  @media (max-width 575px)
+    width: 20px
+    height 20px
+
+  @media (min-width 576px)
+    width: 24px
+    height 24px

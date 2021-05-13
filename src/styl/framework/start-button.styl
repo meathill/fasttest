@@ -1,9 +1,15 @@
 .start-section
-  margin auto 0
   position relative
-  min-height: 420px
+  //display flex
+  align-items: center
+  min-height var(--content-height)
 
-$width = 254px
+  @media (max-width 575px)
+    --radius 212px
+
+  @media (min-width 576px)
+    --radius 254px
+    margin auto 0
 
 #go-button
   background: linear-gradient(to right top, #7975FF, #F95DFF);
@@ -18,8 +24,8 @@ $width = 254px
   padding 0
   margin 0 auto
   position relative
-  width $width
-  height $width
+  width var(--radius)
+  height var(--radius)
   z-index: 2
 
   &:hover
@@ -29,12 +35,13 @@ $width = 254px
     background: linear-gradient(to right top, #625ECD, #C54BCE)
 
 .spinner
-  width: $width
-  height: $width
+  width: var(--radius)
+  height: var(--radius)
   position absolute
-  top 0
+  top 50%
   left 50%
-  margin-left: - ($width / 2)
+  margin-top calc(var(--radius) / -2)
+  margin-left: calc(var(--radius) / -2)
   pointer-events: none
   background: linear-gradient(to right top, #7975FF, #F95DFF);
   color white

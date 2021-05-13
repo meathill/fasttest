@@ -11,29 +11,57 @@
     margin: 0
     display: flex
 
+  @media (max-width 575px)
+    padding 0 15px
+
 .test-item
   background-color: white
-  border-radius: 14px
   box-shadow: 0 1px 6px #F2F4FC
   display: flex
   flex-direction column
-  width: 260px
-  height: 92px
-  margin-right: 24px
+  margin 0
   padding 0 20px
   justify-content: center
 
-  &:nth-child(3n + 3)
-    margin-right: 0
+  @media (max-width 575px)
+    border-radius: 9px
+    font-size: 12px
+    width calc((100vw - 30px -10px) / 2)
+    height 62px
 
-  &:nth-child(n + 4)
-    margin-top: 24px
+    &:nth-child(2n)
+      margin-left: 10px
+
+    &:nth-child(n + 3)
+      margin-top: 10px
+
+  @media (min-width 576px)
+    border-radius: 14px
+    width: 260px
+    height: 92px
+    margin-right: 24px
+
+    &:nth-child(3n)
+      margin-right: 0
+
+    &:nth-child(n + 4)
+      margin-top: 24px
 
 .star
-  background url(../../assets/star0.png)
+  background url(../../assets/star0.png) no-repeat
+  background-size: cover
   display: block
-  width: 18px
-  height 18px
 
-  + .star
-    margin-left: 12px
+  @media (max-width 575px)
+    width 12px
+    height 12px
+
+    + .star
+      margin-left: 8px
+
+  @media (min-width 576px)
+    width 18px
+    height 18px
+
+    + .star
+      margin-left: 12px

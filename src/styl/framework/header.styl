@@ -1,13 +1,27 @@
 #header
   background-color: white
-  height 66px
   box-shadow: 0 1px 6px #F2F4FC
-  margin-bottom: 24px
 
   .container
-    width: 1120px
     height 100%
     margin 0 auto
     display: flex
     justify-content: space-between
     align-items: center
+
+  @media (max-width 575px)
+    height 50px
+    margin-bottom: 10px
+
+    .container
+      padding: 0 1rem
+
+    .navbar-brand img
+      height 1.5rem
+
+  @media (min-width 576px)
+    height 66px
+    margin-bottom: 24px
+
+    .container
+      max-width: 1120px

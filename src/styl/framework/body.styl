@@ -1,16 +1,20 @@
-html,
-body
-  height 100%
-
 html
   font-size: 16px
+  height 100%
 
 body
   background-color: #F5FAFE
   color #1C1A28
+  min-height 100%
   display: flex
   flex-direction: column
   font-family: -apple-system, "Helvetica Neue", "Arial", "PingFang SC", "Hiragino Sans GB", "STHeiti", "Microsoft YaHei", "Microsoft JhengHei", "Source Han Sans SC", "Noto Sans CJK SC", "Source Han Sans CN", "Noto Sans SC", "Source Han Sans TC", "Noto Sans CJK TC", "WenQuanYi Micro Hei", SimSun, sans-serif
+
+  @media (max-width 575px)
+    --content-height 320px
+
+  @media (min-width 576px)
+    --content-height 420px
 
 *,
 *::before
@@ -20,3 +24,12 @@ body
 
 #ads
   margin 0 auto
+  background-color: #EEE
+
+  @media (max-width 575px)
+    width: 320px
+    height 50px
+
+  @media (min-width 576px)
+    width: 726px
+    height 90px
