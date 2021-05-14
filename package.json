@@ -30,6 +30,7 @@
   },
   "dependencies": {
     "animate.css": "^4.1.1",
+    "axios": "^0.21.1",
     "normalize.css": "^8.0.1",
     "postcss-loader": "^5.2.0",
     "spinkit": "^2.0.1",

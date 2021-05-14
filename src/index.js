@@ -1,40 +1,67 @@
 import './styl/screen.styl';
 import cases from './data/case';
 
+/* global axios */
+
 const startButton = document.getElementById('go-button');
+const restartButton = document.getElementById('restart-button');
 const startSection = document.getElementById('start-section');
 const clock = document.getElementById('clock');
 const clockBg = document.getElementById('clock-color');
 const number = document.getElementById('speed-number');
 const result = document.getElementById('result');
+const progress = document.getElementById('progress');
 
 startButton.addEventListener('click', doStart);
+restartButton.addEventListener('click', doRestart);
+
+clock.addEventListener('animationend', event => {
+  clock.classList.remove('animated', 'zoomIn', 'zoomOut');
+});
 
 async function doStart() {
   startSection.classList.add('animated', 'zoomOut');
   await sleep(500);
-  startSection.hidden = true;
+  startSection.classList.add('hide');
   startSection.classList.remove('animated', 'zoomOut');
+  await doTest();
+}
+async function doRestart() {
+  result.classList.add('animated', 'zoomOut');
+  await sleep(500);
+  result.hidden = true;
+  result.classList.remove('animated', 'zoomOut');
+  await doTest();
+}
+async function doTest() {
   clock.hidden = false;
+  clock.classList.add('animated', 'zoomIn');
 
   let score = 100;
-  for (const testCase of cases) {
+  for (let i = 0, len = cases.length; i < len; i++) {
+    const testCase = cases[i];
+    progress.innerText = `${i + 1}/${len}`;
     try {
-      await new Promise((resolve, reject) => {
-        const script = document.createElement('script');
-        script.async = true;
-        script.onload = resolve;
-        script.onerror = reject;
-        script.src = testCase.link;
-        document.head.appendChild(script);
+      let startTime = Date.now();
+      let loaded = 0;
+      await axios.get(testCase.link + '?ts=' + Date.now, {
+        onDownloadProgress(event) {
+          const now = Date.now();
+          const time = now - startTime;
+          const speed = (event.loaded - loaded) / time * 1000 / 1024 / 1024;
+          showSpeed(speed);
+        },
       });
     } catch (e) {
-      score -= 100 / cases.length;
+      score -= 100 / len;
     }
   }
 
+  clock.classList.add('animated', 'zoomOut');
+  await sleep(500);
   clock.hidden = true;
   result.hidden = false;
+  result.classList.add('animated', 'zoomIn');
 }
 function sleep(duration) {
   return new Promise(resolve => setTimeout(resolve, duration));

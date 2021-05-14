@@ -1,10 +1,16 @@
 .clock
   background no-repeat url(../../assets/clock-bg.png) top right
-  width 420px
-  height 420px
-  margin auto
+  background-size: 96.42857143% auto
+  width var(--content-height)
+  height var(--content-height)
   position: relative
   --speed: 0
+
+  @media (max-width 575px)
+   margin 0 auto
+
+  @media (min-width 576px)
+    margin auto
 
 .speed-number,
 .speed-unit,
@@ -16,36 +22,74 @@
 
 .speed-number
   font-family: 'D-Din condensed'
-  font-size: 58px
-  top 168px
+
+  @media (max-width 575px)
+    font-size: 48px
+    top 130px
+
+  @media (min-width 576px)
+    font-size: 58px
+    top 168px
 
 .speed-unit
   color #AABCD1
   top 229px
 
+  @media (max-width 575px)
+    font-size: 14px
+    top 180px
+
+  @media (min-width 576px)
+    top 229px
+
 .clock-progress
   color #59556C
-  top 348px
+
+  @media (max-width 575px)
+    font-size: 14px
+    top 260px
+
+  @media (min-width 576px)
+    top 348px
 
 .clock-color
   background no-repeat url(../../assets/speed-color.png)
   background-size: contain
   position: absolute
-  top 24px
-  left 33px
-  width: 354px
-  height 312px
   -webkit-mask-image url(../../assets/mask.svg)
+  -webkit-mask-size 100% auto
   transition: -webkit-mask-image .2s
+
+  @media (max-width 575px)
+    top 19px
+    left 25px
+    width: 270px
+    height 238px
+
+  @media (min-width 576px)
+    top 24px
+    left 33px
+    width: 354px
+    height 312px
 
 .clock-pointer
   background no-repeat url(../../assets/pointer.png) top center
+  background-size: 100% auto
   position: absolute
-  top 24px
-  left 50%
-  margin-left -6px
-  width: 12px
-  height 176px
   transition: transform .2s
   transform: rotate(calc(-135deg + (var(--speed) / 100 * 270deg)))
   transform-origin bottom center
+
+  @media (max-width 575px)
+    top 19px
+    left 50%
+    margin-left -5px
+    width: 10px
+    height 134px
+
+  @media (min-width 576px)
+    top 24px
+    left 50%
+    margin-left -6px
+    width: 12px
+    height 176px
