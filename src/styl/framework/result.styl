@@ -1,5 +1,6 @@
 .result
   min-height var(--content-height)
+  --number 0
 
   @media (max-width 575px)
     margin 0 auto
@@ -28,6 +29,10 @@
 .score-number
   font-family: 'D-Din condensed'
 
+  &::before
+    counter-reset: number var(--number)
+    content counter(number)
+
   @media (max-width 575px)
     font-size: 60px
     line-height: 93px
@@ -51,6 +56,9 @@
 .progress-bar
   background-color: #7975FF
   height 100%
+  width: calc(var(--number) * 1%)
+  transition width .5s
+  transition-delay: 1s
 
 .restart-button
   background-image: linear-gradient(to right, #F75FFF, #8373FF);

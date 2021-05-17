@@ -6,6 +6,7 @@
 
   dt
     margin-bottom: 9px
+    line-height: 1.5
 
   dd
     margin: 0
@@ -51,6 +52,15 @@
   background url(../../assets/star0.png) no-repeat
   background-size: cover
   display: block
+  transition: background .25s
+
+  &.light
+    background-image: url(../../assets/star1.png)
+
+  for n in 2..5
+    &:nth-child({n})
+      $delay = (n - 1) * 0.125s
+      transition-delay: $delay
 
   @media (max-width 575px)
     width 12px

@@ -27,6 +27,14 @@ async function doStart() {
   await doTest();
 }
 async function doRestart() {
+  const stars = document.getElementsByClassName('light');
+  while (stars.length) {
+    stars[0].classList.remove('light');
+  }
+  result.style.removeProperty('--number');
+  clock.style.removeProperty('--speed');
+  clockBg.style['-webkit-mask-image'] = '';
+
   result.classList.add('animated', 'zoomOut');
   await sleep(500);
   result.hidden = true;
@@ -36,32 +44,42 @@ async function doRestart() {
 async function doTest() {
   clock.hidden = false;
   clock.classList.add('animated', 'zoomIn');
+  await sleep(800);
 
   let score = 100;
+  let speed;
   for (let i = 0, len = cases.length; i < len; i++) {
     const testCase = cases[i];
-    progress.innerText = `${i + 1}/${len}`;
+    progress.innerText = `${i}/${len}`;
     try {
       let startTime = Date.now();
       let loaded = 0;
-      await axios.get(testCase.link + '?ts=' + Date.now, {
+      await axios.get(testCase.link + '?ts=' + Date.now(), {
         onDownloadProgress(event) {
           const now = Date.now();
           const time = now - startTime;
-          const speed = (event.loaded - loaded) / time * 1000 / 1024 / 1024;
-          showSpeed(speed);
+          speed = (event.loaded - loaded) / time * 1000 / 1024 / 1024;
+          loaded = event.loaded;
+          startTime = now;
+          showSpeed(Math.round(speed * 100) / 100);
         },
       });
+      progress.innerText = `${i + 1}/${len}`;
     } catch (e) {
       score -= 100 / len;
     }
+    showItemSpeed(i, Math.round(speed / 20));
+    await sleep(500);
   }
 
   clock.classList.add('animated', 'zoomOut');
   await sleep(500);
   clock.hidden = true;
+  clock.classList.remove('animated', 'zoomOut');
   result.hidden = false;
   result.classList.add('animated', 'zoomIn');
+  await sleep(100);
+  result.style.setProperty('--number', score);
 }
 function sleep(duration) {
   return new Promise(resolve => setTimeout(resolve, duration));
@@ -79,5 +97,14 @@ function showSpeed(speed) {
   const url = URL.createObjectURL(blob);
   clockBg.style['-webkit-mask-image'] = 'url(' + url + ')';
 }
+function showItemSpeed(index, score) {
+  score = score > 10 ? 10 : score;
+  const item = document.getElementsByClassName('test-item')[index];
+  const stars = item.getElementsByClassName('star');
+  for (let i = 0; i < score; i++) {
+    stars[i].classList.add('light');
+  }
+}
 
 window.showSpeed = showSpeed;
+window.showItemSpeed = showItemSpeed;
