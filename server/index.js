@@ -8,7 +8,7 @@ const webpack = require('webpack');
 const webpackConfig = require('../build/webpack.config');
 
 const app = express();
-const port = 3000;
+const port = 3100;
 
 app.use(express.json());
 

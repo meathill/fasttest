@@ -92,7 +92,7 @@ const config = {
   devServer: {
     port: 8081,
     proxy: {
-      '/data': 'http://localhost:3000',
+      '/data': 'http://localhost:3100',
     },
   },
 };
