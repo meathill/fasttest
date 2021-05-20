@@ -11,7 +11,7 @@ const state = {
 };
 const mutations = {
   [SET_CASES](state, cases) {
-    state.cases = cases;
+    state.cases = cases.map(({title, link}) => ({title, link}));
   },
   [SET_LANG](state, lang) {
     state.lang = lang;
