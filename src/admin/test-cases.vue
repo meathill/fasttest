@@ -7,7 +7,7 @@
         th Title
         th Link
         th
-    tbody
+    tbody(ref="tbody")
       template(v-for="(item, index) in testCases")
         tr(
           @change="onChange(index)",
@@ -16,12 +16,16 @@
             td
               input.form-control(
                 v-model="item.title",
+                title="Title",
+                placeholder="Title",
                 @keyup.enter="doSave(index)",
               )
             td
               input.form-control(
                 v-model="item.link",
                 type="url",
+                title="Link",
+                placeholder="Link",
                 @keyup.enter="doSave(index)",
               )
             td
@@ -74,28 +78,36 @@
 import {
   computed,
   reactive,
+  ref,
   watch,
+  nextTick,
+  onMounted,
 } from 'vue';
 import {useStore} from 'vuex';
 import {SET_CASES} from './store';
 
 export default {
   setup() {
-    function doAdd() {
+    async function doAdd() {
       testCases.push({
         title: '',
         link: '',
         isEditing: true,
         isNew: true,
       });
+      await nextTick();
+      inputs[inputs.length - 2].focus();
     }
-    function doEdit(index) {
+    async function doEdit(index) {
       testCases[index].isEditing = true;
       const {title, link} = testCases[index];
       testCases[index].backup = {
         title,
         link,
       };
+      await nextTick();
+      inputs[index * 2].select();
+      inputs[index * 2].focus();
     }
     function doSave(index) {
       testCases[index].isNew = false;
@@ -137,6 +149,8 @@ export default {
 
     const store = useStore();
     const testCases = reactive(store.state.cases ? [...store.state.cases] : []);
+    const tbody = ref(null);
+    let inputs;
 
     watch(store.state, ({cases}) => {
       if (testCases.length > 0) {
@@ -150,8 +164,12 @@ export default {
       }));
     });
 
+    onMounted(() => {
+      inputs = tbody.value.getElementsByTagName('input');
+    });
     return {
       testCases,
+      tbody,
 
       doAdd,
       doEdit,
