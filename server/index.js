@@ -1,9 +1,12 @@
 const express = require('express');
 const {
   promises: {
+    readFile,
     writeFile,
   },
+  existsSync,
 } = require('fs');
+const {resolve} = require('path');
 const webpack = require('webpack');
 const webpackConfig = require('../build/webpack.config');
 
@@ -13,12 +16,22 @@ const port = 3100;
 app.use(express.json());
 
 app.get('/data', async (req, res, next) => {
-  const cases = require('../src/data/case');
-  const lang = require('../src/data/lang');
+  let cases = '../src/data/case';
+  delete require.cache[resolve(cases)];
+  cases = require(cases);
+  let lang = '../src/data/lang';
+  delete require.cache[resolve(lang)];
+  lang = require(lang);
+  let baseLang = resolve(__dirname, '../src/data/base-lang');
+  if (existsSync(baseLang)) {
+    baseLang = await readFile(baseLang, 'utf8');
+    baseLang = baseLang.split('\n');
+  }
 
   res.send({
     cases,
     lang,
+    baseLang,
   });
 });
 
@@ -26,10 +39,12 @@ app.post('/data', async (req, res, next) => {
   res.setHeader('Content-type', 'application/octet-stream');
 
   let {cases, lang} = req.body;
-  cases = 'module.exports = ' . JSON.stringify(cases, null, '  ');
-  await writeFile('../src/data/case.js', cases, 'utf8');
-  lang = 'module.exports = ' . JSON.stringify(lang, null, '  ');
-  await writeFile('../src/data/lang.js', lang, 'utf8');
+  cases = 'module.exports = ' + JSON.stringify(cases, null, '  ') + '\n';
+  let file = resolve(__dirname, '../src/data/case.js');
+  await writeFile(file, cases, 'utf8');
+  lang = 'module.exports = ' + JSON.stringify(lang, null, '  ') + '\n';
+  file = resolve(__dirname, '../src/data/lang.js');
+  await writeFile(file, lang, 'utf8');
 
   res.write('Local data saved. Start to build...');
 

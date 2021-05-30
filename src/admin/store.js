@@ -8,21 +8,25 @@ export const SET_LANG = 'setLang';
 const state = {
   cases: null,
   lang: null,
+  baseLang: null,
 };
 const mutations = {
   [SET_CASES](state, cases) {
     state.cases = cases.map(({title, link}) => ({title, link}));
   },
-  [SET_LANG](state, lang) {
+  [SET_LANG](state, {lang, baseLang}) {
     state.lang = lang;
+    if (baseLang) {
+      state.baseLang = baseLang;
+    }
   },
 };
 const actions = {
   async [GET_DATA]({commit}) {
     const response = await axios.get('/data');
-    const {cases, lang} = response.data;
+    const {cases, lang, baseLang} = response.data;
     commit(SET_CASES, cases);
-    commit(SET_LANG, lang);
+    commit(SET_LANG, {lang, baseLang});
   },
 };
 

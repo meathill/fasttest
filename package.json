@@ -6,7 +6,8 @@
   "scripts": {
     "server": "node ./server/index.js",
     "serve": "webpack serve --config build/webpack.config.js",
-    "serve:admin": "webpack serve --config build/webpack.admin.config.js"
+    "serve:admin": "webpack serve --config build/webpack.admin.config.js",
+    "extract": "node ./build/extract.js"
   },
   "keywords": [],
   "author": "Meathill <meathill@gmail.com>",
@@ -41,6 +42,7 @@
     "bootstrap": "^5.0.1",
     "bootstrap-icons": "^1.5.0",
     "express": "^4.17.1",
+    "lodash": "^4.17.21",
     "normalize.css": "^8.0.1",
     "postcss-loader": "^5.2.0",
     "spinkit": "^2.0.1",

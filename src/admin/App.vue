@@ -14,7 +14,12 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light.mb-3
             :to="{name: 'i18n'}",
           ) i18n
 
-      button.btn.btn-primary.ms-auto(
+    .ms-auto.d-flex
+      .alert.mb-0.me-3.py-1.px-3(
+        v-if="message",
+        :class="status ? 'alert-success' : 'alert-danger'",
+      ) {{message}}
+      button.btn.btn-primary(
         type="button",
         :disabled="isPublishing",
         @click="doPublish",
@@ -32,16 +37,27 @@ import {
 } from 'vue';
 import { useStore } from 'vuex';
 import {GET_DATA} from './store';
+import {publish} from "@/service";
 
 export default {
   setup() {
     async function doPublish() {
       isPublishing.value = true;
-
+      message.value = status.value = null;
+      try {
+        const {cases, lang} = store.state;
+        await publish({cases, lang});
+        status.value = true;
+        message.value = 'Published successfully.';
+      } catch (e) {
+        message.value = 'Failed to publish. ' + e.message;
+      }
       isPublishing.value = false;
     }
 
     const isPublishing = ref(false);
+    const status = ref(false);
+    const message = ref('');
     const store = useStore();
 
     onBeforeMount(() => {
@@ -50,6 +66,8 @@ export default {
 
     return {
       isPublishing,
+      status,
+      message,
 
       doPublish,
     };
