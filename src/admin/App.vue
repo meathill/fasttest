@@ -36,8 +36,8 @@ import {
   onBeforeMount,
 } from 'vue';
 import { useStore } from 'vuex';
-import {GET_DATA} from './store';
-import {publish} from "@/service";
+import { GET_DATA } from './store';
+import { publish } from '@/service';
 
 export default {
   setup() {
@@ -45,8 +45,8 @@ export default {
       isPublishing.value = true;
       message.value = status.value = null;
       try {
-        const {cases, lang} = store.state;
-        await publish({cases, lang});
+        const { cases, lang } = store.state;
+        await publish({ cases, lang });
         status.value = true;
         message.value = 'Published successfully.';
       } catch (e) {

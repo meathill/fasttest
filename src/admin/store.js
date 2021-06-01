@@ -12,9 +12,9 @@ const state = {
 };
 const mutations = {
   [SET_CASES](state, cases) {
-    state.cases = cases.map(({title, link}) => ({title, link}));
+    state.cases = cases.map(({ title, link }) => ({ title, link }));
   },
-  [SET_LANG](state, {lang, baseLang}) {
+  [SET_LANG](state, { lang, baseLang }) {
     state.lang = lang;
     if (baseLang) {
       state.baseLang = baseLang;
@@ -22,11 +22,11 @@ const mutations = {
   },
 };
 const actions = {
-  async [GET_DATA]({commit}) {
+  async [GET_DATA]({ commit }) {
     const response = await axios.get('/data');
-    const {cases, lang, baseLang} = response.data;
+    const { cases, lang, baseLang } = response.data;
     commit(SET_CASES, cases);
-    commit(SET_LANG, {lang, baseLang});
+    commit(SET_LANG, { lang, baseLang });
   },
 };
 

@@ -1,13 +1,13 @@
-const {resolve} = require('path');
-const {DefinePlugin, IgnorePlugin} = require('webpack');
+const { resolve } = require('path');
+const { DefinePlugin, IgnorePlugin } = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCSSExtractPlugin = require('mini-css-extract-plugin');
-const {VueLoaderPlugin} = require('vue-loader');
+const { VueLoaderPlugin } = require('vue-loader');
 const isDevServer = process.env.WEBPACK_DEV_SERVER;
 
 const config = {
   entry: {
-    'index': resolve(__dirname, '../src/admin/main.js'),
+    index: resolve(__dirname, '../src/admin/main.js'),
   },
   module: {
     rules: [

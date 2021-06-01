@@ -16,12 +16,18 @@
                 v-model="langItem.language",
                 required,
               )
+          tr
+            th Path
+            td
+              input.form-control(
+                v-model="langItem.path",
+                required,
+              )
           tr(v-for="(value, key) in langItem.items")
             th {{key}}
             td
               input.form-control(
                 v-model="langItem.items[key]",
-                required,
               )
           tr
             td(colspan="2")
@@ -42,6 +48,9 @@
           tr
             th Language
             td {{langItem.language}}
+          tr
+            th Path
+            td {{langItem.path}}
           tr(v-for="(value, key) in langItem.items")
             th {{key}}
             td {{value}}
@@ -60,7 +69,6 @@
                 )
                   i.bi.bi-trash
 
-
     button.btn.btn-primary.col-2(
       type="button",
       @click="doAdd",
@@ -71,12 +79,10 @@
 
 <script>
 import {
-  computed,
-  ref,
   reactive,
   watch,
 } from 'vue';
-import {useStore} from 'vuex';
+import { useStore } from 'vuex';
 import clone from 'lodash/clone';
 import map from 'lodash/map';
 import { SET_LANG } from './store';
@@ -93,7 +99,7 @@ export default {
     }
     async function doEdit(index) {
       list[index].isEditing = true;
-      const {items} = list[index];
+      const { items } = list[index];
       list[index].backup = clone(items);
     }
     function doSave(index) {
@@ -108,12 +114,16 @@ export default {
           backup,
           items,
           language,
+          path,
         } = item;
         items = isEditing && backup ? backup : items;
-        memo[language] = items;
+        memo[language] = {
+          __path: path,
+          ...items,
+        };
         return memo;
       }, {});
-      store.commit(SET_LANG, {lang});
+      store.commit(SET_LANG, { lang });
     }
     function doCancel(index) {
       if (list[index].changed && !confirm('This row has been changed, are you sure to cancel?')) {
@@ -123,7 +133,7 @@ export default {
       if (list[index].isNew) {
         return list.splice(index, 1);
       }
-      const {backup} = list[index];
+      const { backup } = list[index];
       list[index].items = backup;
       list[index].isEditing = false;
     }
@@ -140,8 +150,14 @@ export default {
 
     function langToLocalLang(lang) {
       return map(lang, (items, language) => {
+        const {
+          __path,
+          ...rest
+        } = items;
+        items = rest;
         return {
           language,
+          path: __path,
           items: Object.assign({}, baseLang, items),
           isEditing: false,
         };
@@ -150,9 +166,9 @@ export default {
 
     const store = useStore();
     const list = reactive(store.state.lang ? langToLocalLang(store.state.lang) : []);
-    let baseLang = {};
+    const baseLang = {};
 
-    watch(store.state, ({lang, baseLang: langKeys}) => {
+    watch(store.state, ({ lang, baseLang: langKeys }) => {
       if (list.length > 0) {
         return;
       }
@@ -175,5 +191,5 @@ export default {
       onChange,
     };
   },
-}
+};
 </script>

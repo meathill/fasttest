@@ -82,8 +82,8 @@ import {
   nextTick,
   onMounted,
 } from 'vue';
-import {useStore} from 'vuex';
-import {SET_CASES} from './store';
+import { useStore } from 'vuex';
+import { SET_CASES } from './store';
 
 export default {
   setup() {
@@ -99,7 +99,7 @@ export default {
     }
     async function doEdit(index) {
       testCases[index].isEditing = true;
-      const {title, link} = testCases[index];
+      const { title, link } = testCases[index];
       testCases[index].backup = {
         title,
         link,
@@ -114,7 +114,7 @@ export default {
         return !item.isNew;
       });
       cases = cases.map(item => {
-        const {isEditing, backup} = item;
+        const { isEditing, backup } = item;
         return isEditing && backup ? backup : item;
       });
       store.commit(SET_CASES, cases);
@@ -128,7 +128,7 @@ export default {
       if (testCases[index].isNew) {
         return testCases.splice(index, 1);
       }
-      const {backup: {title, link}} = testCases[index];
+      const { backup: { title, link } } = testCases[index];
       testCases[index] = {
         isEditing: false,
         title,
@@ -151,7 +151,7 @@ export default {
     const tbody = ref(null);
     let inputs;
 
-    watch(store.state, ({cases}) => {
+    watch(store.state, ({ cases }) => {
       if (testCases.length > 0) {
         return;
       }

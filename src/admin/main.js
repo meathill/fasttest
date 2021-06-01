@@ -1,4 +1,4 @@
-import {createApp} from 'vue';
+import { createApp } from 'vue';
 import App from './app';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styl/admin.styl';

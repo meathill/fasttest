@@ -58,7 +58,7 @@ async function doTest() {
         onDownloadProgress(event) {
           const now = Date.now();
           const time = now - startTime;
-          speed = (event.loaded - loaded) / time * 1000 / 1024 / 1024;
+          speed = (event.loaded - loaded) / time * 1000 / 1024 / 1024 * 8;
           loaded = event.loaded;
           startTime = now;
           showSpeed(Math.round(speed * 100) / 100);
@@ -93,7 +93,7 @@ function showSpeed(speed) {
   number.innerText = speed;
   clock.style.setProperty('--speed', speed);
   const svg = `<svg version="1.1" xmlns="http://www.w3.org/2000/svg" height="354" width="354" viewBox="0 0 20 20" transform="rotate(135)"><circle r="5" cx="10" cy="10" fill="transparent" stroke="tomato" stroke-width="10" stroke-dasharray="calc(${speed} / 100 * 75 * 31.4 / 100) 31.4"></circle></svg>`;
-  const blob = new Blob([svg], {type: 'image/svg+xml'});
+  const blob = new Blob([svg], { type: 'image/svg+xml' });
   const url = URL.createObjectURL(blob);
   clockBg.style['-webkit-mask-image'] = 'url(' + url + ')';
 }

@@ -6,16 +6,16 @@ const {
   },
   existsSync,
 } = require('fs');
-const {resolve} = require('path');
+const { resolve } = require('path');
 const webpack = require('webpack');
-const webpackConfig = require('../build/webpack.config');
+const webpackConfig = require('../build/webpack.config.prod');
 
 const app = express();
 const port = 3100;
 
 app.use(express.json());
 
-app.get('/data', async (req, res, next) => {
+app.get('/data', async(req, res, next) => {
   let cases = '../src/data/case';
   delete require.cache[resolve(cases)];
   cases = require(cases);
@@ -35,26 +35,92 @@ app.get('/data', async (req, res, next) => {
   });
 });
 
-app.post('/data', async (req, res, next) => {
+app.post('/data', async(req, res, next) => {
   res.setHeader('Content-type', 'application/octet-stream');
 
-  let {cases, lang} = req.body;
-  cases = 'module.exports = ' + JSON.stringify(cases, null, '  ') + '\n';
+  const { cases, lang } = req.body;
+  const casesJS = 'module.exports = ' + JSON.stringify(cases, null, '  ') + '\n';
   let file = resolve(__dirname, '../src/data/case.js');
-  await writeFile(file, cases, 'utf8');
-  lang = 'module.exports = ' + JSON.stringify(lang, null, '  ') + '\n';
+  await writeFile(file, casesJS, 'utf8');
+  const langJS = 'module.exports = ' + JSON.stringify(lang, null, '  ') + '\n';
   file = resolve(__dirname, '../src/data/lang.js');
-  await writeFile(file, lang, 'utf8');
+  await writeFile(file, langJS, 'utf8');
 
-  res.write('Local data saved. Start to build...');
+  res.write('Local data saved. Start to build dist files.\n');
 
-  const config = await webpackConfig();
-  await webpack(config);
+  process.env.NODE_ENV = 'production';
+  lang.English = {
+    __path: '',
+  };
+  for (const language in lang) {
+    res.write('Start to build ' + language + '\n');
+    const item = lang[language];
+    const {
+      __path,
+      ...po
+    } = item;
+    const config = await webpackConfig(language, __path, 'production');
+    const missing = [];
+    global.__ = language === 'English'
+      ? value => value
+      : function(value) {
+        if (po && po[value]) {
+          return po[value];
+        } else {
+          console.warn(`[i18n: ${language}] no translation: ${value}`);
+          missing.push(value);
+        }
+      };
+    const compiler = webpack(config);
+    await new Promise((resolve) => {
+      compiler.run((err, stats) => {
+        if (err) {
+          console.error(err.stack || err);
+          if (err.details) {
+            console.error(err.details);
+          }
+        }
 
-  res.write('Build dist files successfully. Start to upload...');
+        const info = stats.toJson();
+
+        if (stats.hasErrors()) {
+          console.error(info.errors);
+          err = true;
+        }
+
+        if (err) {
+          compiler.close();
+          return resolve();
+        }
+
+        if (stats.hasWarnings()) {
+          console.warn(info.warnings);
+        }
+
+        console.log(stats.toString({
+          chunks: false,
+          colors: true,
+        }));
+        compiler.close(err => {
+          if (err) {
+            console.warn('Close error: ' + err);
+          }
+        });
+        resolve();
+      });
+    });
+    if (missing.length > 0) {
+      const path = resolve(__dirname, `../dist/missing-${__path}.txt`);
+      await writeFile(path, missing.join('\n'), 'utf8');
+    }
+    res.write(`Built ${language} successfully.\n`);
+  }
+
+  res.write('Built dist files successfully. Start to upload...');
 
   // try {} catch (e) {}
 
+  res.write('Uploaded. All done.');
   res.end();
 });
 
