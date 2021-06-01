@@ -12,7 +12,16 @@ html(lang="en")
         a.navbar-brand(href="/")
           img(src=require('../assets/logo.png'))
 
-        .lang English
+        .lang
+          input#lang-toggler(
+            type="checkbox",
+            hidden,
+          )
+          label(for="lang-toggler")= language
+
+          .dropdown
+            each path, lang  in langs
+              a.dropdown-item(href= path ? '/' + path + '/' : '/')= lang
 
     #ads
 
@@ -35,6 +44,6 @@ html(lang="en")
 
 
     footer#footer= __('© 2021 Fasttest. All Rights Reserved')
-      small.text-muted= 'v' + version
+      small.ml-1= 'v' + version
 
     script(src="https://unpkg.com/axios@0.21.1/dist/axios.min.js", async)

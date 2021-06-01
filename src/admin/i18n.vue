@@ -126,7 +126,7 @@ export default {
       store.commit(SET_LANG, { lang });
     }
     function doCancel(index) {
-      if (list[index].changed && !confirm('This row has been changed, are you sure to cancel?')) {
+      if (list[index].changed && !confirm('This language has been changed, are you sure to cancel?')) {
         return;
       }
 

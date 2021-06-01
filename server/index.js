@@ -59,7 +59,7 @@ app.post('/data', async(req, res, next) => {
       __path,
       ...po
     } = item;
-    const config = await webpackConfig(language, __path, 'production');
+    const config = await webpackConfig(language, __path, cases, lang);
     const missing = [];
     global.__ = language === 'English'
       ? value => value
@@ -70,6 +70,7 @@ app.post('/data', async(req, res, next) => {
           console.warn(`[i18n: ${language}] no translation: ${value}`);
           missing.push(value);
         }
+        return value;
       };
     const compiler = webpack(config);
     await new Promise((resolve) => {

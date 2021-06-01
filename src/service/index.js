@@ -1,5 +1,7 @@
 import axios from 'axios';
 
-export function publish(data) {
-  return axios.post('/data', data);
+export function publish(data, onDownloadProgress) {
+  return axios.post('/data', data, {
+    onDownloadProgress,
+  });
 }

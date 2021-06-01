@@ -1,5 +1,4 @@
 const { resolve } = require('path');
-const { IgnorePlugin } = require('webpack');
 
 module.exports = {
   module: {
@@ -68,9 +67,6 @@ module.exports = {
       '@': resolve(__dirname, 'src'),
     },
   },
-  plugins: [
-    new IgnorePlugin(/^\.\/locale$/, /moment$/),
-  ],
   devServer: {
     port: 8080,
   },

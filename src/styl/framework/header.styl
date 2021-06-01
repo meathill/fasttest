@@ -25,3 +25,53 @@
 
     .container
       max-width: 1120px
+
+.lang
+  position relative
+  font-size 14px
+
+  label
+    width 100px
+    height 2rem
+    border 1px solid #E0E3EC
+    border-radius 6px
+    display flex
+    justify-content center
+    align-items center
+    cursor pointer
+
+    &::after
+      content ''
+      margin-left .5em
+      display block
+      width 5px
+      height 5px
+      border-left #AEB7C4 1px solid
+      border-bottom #AEB7C4 1px solid
+      transform rotate(-45deg) translate(3px, 0)
+
+    &:hover
+      background-color #EEE
+
+  input:checked ~ .dropdown
+    display block
+
+.dropdown
+  background-color white
+  border 1px solid #F2F4FC
+  border-radius 4px
+  box-shadow 0 2px 10px rgba(#C5CDE9, .5)
+  display none
+  width 140px
+  position absolute
+  margin-top 6px
+
+.dropdown-item
+  color #59556C
+  display block
+  line-height 30px
+  padding 0 1.5rem
+  text-decoration none
+
+  &:hover
+    background-color #E3EFFC

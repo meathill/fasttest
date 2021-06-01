@@ -15,10 +15,13 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light.mb-3
           ) i18n
 
     .ms-auto.d-flex
-      .alert.mb-0.me-3.py-1.px-3(
+      .alert.mb-0.me-2.py-1.px-3(
         v-if="message",
         :class="status ? 'alert-success' : 'alert-danger'",
       ) {{message}}
+      .alert.alert-info.mb-0.me-2.py-1.px-3.animated.flash.infinite.slower(
+        v-if="currentStatus",
+      ) {{currentStatus}}
       button.btn.btn-primary(
         type="button",
         :disabled="isPublishing",
@@ -46,8 +49,15 @@ export default {
       message.value = status.value = null;
       try {
         const { cases, lang } = store.state;
-        await publish({ cases, lang });
+        let offset = 0;
+        await publish({ cases, lang }, ({target: xhr}) => {
+          const {responseText} = xhr;
+          const chunk = responseText.substring(offset);
+          offset = responseText.length;
+          currentStatus.value = chunk;
+        });
         status.value = true;
+        currentStatus.value = '';
         message.value = 'Published successfully.';
       } catch (e) {
         message.value = 'Failed to publish. ' + e.message;
@@ -57,6 +67,7 @@ export default {
 
     const isPublishing = ref(false);
     const status = ref(false);
+    const currentStatus = ref('');
     const message = ref('');
     const store = useStore();
 
@@ -68,6 +79,7 @@ export default {
       isPublishing,
       status,
       message,
+      currentStatus,
 
       doPublish,
     };

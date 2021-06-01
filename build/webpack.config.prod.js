@@ -1,19 +1,19 @@
 const { resolve } = require('path');
-const { cloneDeep } = require('lodash');
+const { cloneDeep, mapValues, omit } = require('lodash');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 const base = require('./webpack.config');
 const pkg = require('../package.json');
-const cases = require('../src/data/case');
 
 /* global __dirname */
 const devMode = process.env.NODE_ENV !== 'production';
 
-module.exports = async(language = 'English', path = 'en') => {
+module.exports = async(language = 'English', path = 'en', cases, langs) => {
   console.log('Current mode: ', devMode ? 'Development' : 'Production');
   console.log('Current language: ', language);
+  langs = mapValues(omit(langs, language), ({__path}) => __path);
   const destDir = resolve(__dirname, `../dist/${path}`);
   let config = await base();
   config = {
@@ -24,13 +24,14 @@ module.exports = async(language = 'English', path = 'en') => {
       publicPath: devMode || !path ? '/' : `/${path}/`,
     },
     plugins: [
-      ...config.plugins,
       new HtmlWebpackPlugin({
         template: resolve(__dirname, '../src/template/index.pug'),
         filename: 'index.html',
         templateParameters: {
           cases,
+          langs,
           version: pkg.version,
+          language,
         },
       }),
       new MiniCssExtractPlugin({
