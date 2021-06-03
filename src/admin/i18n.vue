@@ -148,6 +148,7 @@ export default {
       list[index].changed = true;
     }
 
+    const baseLang = {};
     function langToLocalLang(lang) {
       return map(lang, (items, language) => {
         const {
@@ -166,7 +167,6 @@ export default {
 
     const store = useStore();
     const list = reactive(store.state.lang ? langToLocalLang(store.state.lang) : []);
-    const baseLang = {};
 
     watch(store.state, ({ lang, baseLang: langKeys }) => {
       if (list.length > 0) {

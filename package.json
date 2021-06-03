@@ -7,6 +7,7 @@
     "server": "node ./server/index.js",
     "serve": "webpack serve --config build/webpack.config.js",
     "serve:admin": "webpack serve --config build/webpack.admin.config.js",
+    "build:admin": "webpack --mode=production --config build/webpack.admin.prod.config.js",
     "extract": "node ./build/extract.js",
     "lint": "eslint ./ --fix --ext=.vue,.js"
   },

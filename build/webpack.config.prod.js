@@ -13,7 +13,7 @@ const devMode = process.env.NODE_ENV !== 'production';
 module.exports = async(language = 'English', path = 'en', cases, langs) => {
   console.log('Current mode: ', devMode ? 'Development' : 'Production');
   console.log('Current language: ', language);
-  langs = mapValues(omit(langs, language), ({__path}) => __path);
+  langs = mapValues(omit(langs, language), ({ __path }) => __path);
   const destDir = resolve(__dirname, `../dist/${path}`);
   let config = await base();
   config = {

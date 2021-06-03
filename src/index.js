@@ -101,7 +101,7 @@ function showItemSpeed(index, score) {
   score = score > 10 ? 10 : score;
   const item = document.getElementsByClassName('test-item')[index];
   const stars = item.getElementsByClassName('star');
-  for (let i = 0; i < score; i++) {
+  for (let i = 0; i < score / 2; i++) {
     stars[i].classList.add('light');
   }
 }

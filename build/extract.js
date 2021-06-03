@@ -18,6 +18,7 @@ pug.renderFile(file, {
 
   },
   cases: [],
+  langs: [],
 });
 
 console.log(texts);

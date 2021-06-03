@@ -50,8 +50,8 @@ export default {
       try {
         const { cases, lang } = store.state;
         let offset = 0;
-        await publish({ cases, lang }, ({target: xhr}) => {
-          const {responseText} = xhr;
+        await publish({ cases, lang }, ({ target: xhr }) => {
+          const { responseText } = xhr;
           const chunk = responseText.substring(offset);
           offset = responseText.length;
           currentStatus.value = chunk;
