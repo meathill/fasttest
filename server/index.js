@@ -14,7 +14,6 @@ const app = express();
 const port = 3100;
 
 app.use(express.json());
-app.use('/', express.static(resolve(__dirname, './public')));
 
 app.get('/data', async(req, res, next) => {
   let cases = '../src/data/case';
