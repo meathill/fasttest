@@ -32,6 +32,7 @@ module.exports = async(language = 'English', path = 'en', cases, langs) => {
           langs,
           version: pkg.version,
           language,
+          path,
         },
       }),
       new MiniCssExtractPlugin({
