@@ -9,7 +9,7 @@ html(lang=path)
     link(
       rel="shortcut icon",
       type="image/png",
-      href=requite('../assets/favicon.png'),
+      href=require('../assets/favicon.png'),
     )
 
     title= __('FastTest')
@@ -39,10 +39,10 @@ html(lang=path)
     include result.pug
 
     .test-items
-      dl.test-item
-        each testCase in cases
-          dt= testCase.title
-          dd
+      each testCase in cases
+        .test-item
+          .test-item-title= testCase.title
+          .test-item-starts
             span.star
             span.star
             span.star

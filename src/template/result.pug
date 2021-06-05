@@ -10,15 +10,15 @@
 
   h5.share-title= __('Share')
   .share-buttons
-    button.share-button(
-      type="button"
+    a.share-button(
+      href="https://www.facebook.com/sharer/sharer.php?u=https://afasttest.com",
+      target="_blank",
+      title="Share to Facebook",
     )
       img(src=require('../assets/share-facebook.png'))
-    button.share-button(
-      type="button"
+    a.share-button(
+      href="https://twitter.com/intent/tweet?url=https://afasttest.com",
+      target="_blank",
+      title="Share to Twitter",
     )
       img(src=require('../assets/share-twitter.png'))
-    button.share-button(
-      type="button"
-    )
-      img(src=require('../assets/share-google.png'))

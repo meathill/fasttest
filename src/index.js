@@ -31,6 +31,10 @@ async function doRestart() {
   while (stars.length) {
     stars[0].classList.remove('light');
   }
+  const errors = document.getElementsByClassName('error');
+  while (errors.length) {
+    errors[0].classList.remove('error');
+  }
   result.style.removeProperty('--number');
   clock.style.removeProperty('--speed');
   clockBg.style['-webkit-mask-image'] = '';
@@ -46,28 +50,34 @@ async function doTest() {
   clock.classList.add('animated', 'zoomIn');
   await sleep(800);
 
-  let score = 100;
+  let score = 0;
+  let oneScore = Math.round(100 / cases.length * 100) / 100;
   let speed;
   for (let i = 0, len = cases.length; i < len; i++) {
     const testCase = cases[i];
     progress.innerText = `${i}/${len}`;
+    let startTime = Date.now();
+    let loaded = 0;
+    speed = 0;
     try {
-      let startTime = Date.now();
-      let loaded = 0;
+      let startTime2 = startTime;
       await axios.get(testCase.link + '?ts=' + Date.now(), {
         onDownloadProgress(event) {
           const now = Date.now();
-          const time = now - startTime;
+          const time = now - startTime2;
           speed = (event.loaded - loaded) / time * 1000 / 1024 / 1024 * 8;
           loaded = event.loaded;
-          startTime = now;
+          startTime2 = now;
           showSpeed(Math.round(speed * 100) / 100);
         },
       });
       progress.innerText = `${i + 1}/${len}`;
     } catch (e) {
-      score -= 100 / len;
+      showItemError(i);
     }
+    const time = Date.now() - startTime;
+    speed = loaded / time * 1000 / 1024 / 1024 * 8;
+    score += oneScore * speed / 100;
     showItemSpeed(i, Math.round(speed / 20));
     await sleep(500);
   }
@@ -79,7 +89,7 @@ async function doTest() {
   result.hidden = false;
   result.classList.add('animated', 'zoomIn');
   await sleep(100);
-  result.style.setProperty('--number', score);
+  result.style.setProperty('--number', Math.round(score).toString());
 }
 function sleep(duration) {
   return new Promise(resolve => setTimeout(resolve, duration));
@@ -98,12 +108,16 @@ function showSpeed(speed) {
   clockBg.style['-webkit-mask-image'] = 'url(' + url + ')';
 }
 function showItemSpeed(index, score) {
-  score = score > 10 ? 10 : score;
+  score = score > 5 ? 5 : score;
   const item = document.getElementsByClassName('test-item')[index];
   const stars = item.getElementsByClassName('star');
-  for (let i = 0; i < score / 2; i++) {
+  for (let i = 0; i < score; i++) {
     stars[i].classList.add('light');
   }
+}
+function showItemError(index) {
+  const item = document.getElementsByClassName('test-item')[index];
+  item.classList.add('error');
 }
 
 window.showSpeed = showSpeed;

@@ -45,7 +45,7 @@ module.exports = {
         ],
       },
       {
-        test: /\.(webp|png|jpg|gif|svg|woff2|eot|woff|ttf|ico|mp4)$/,
+        test: /\.(webp|png|jpg|gif|svg|woff2|eot|woff|ttf|otf|ico|mp4)$/,
         use: [
           {
             loader: 'file-loader',

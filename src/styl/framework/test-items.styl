@@ -4,11 +4,11 @@
   width: 828px
   margin 0 auto
 
-  dt
+  .test-item-title
     margin-bottom: 9px
     line-height: 1.5
 
-  dd
+  .test-item-starts
     margin: 0
     display: flex
 
@@ -47,6 +47,23 @@
 
     &:nth-child(n + 4)
       margin-top: 24px
+
+  &.error
+    background-color #f8d7da
+    box-shadow 0 0 4px rgba(#842029, .25)
+
+    .test-item-title
+      position relative
+
+      &::after
+        color #842029
+        content '×'
+        font-size 1.5em
+        font-weight bold
+        margin-left 1em
+        position absolute
+        top -.4em
+        left -1.65em
 
 .star
   background url(../../assets/star0.png) no-repeat
