@@ -12,6 +12,8 @@ const number = document.getElementById('speed-number');
 const result = document.getElementById('result');
 const progress = document.getElementById('progress');
 
+const MAX_SCORE_SPEED = 50; // 50Mbps = 100
+
 startButton.addEventListener('click', doStart);
 restartButton.addEventListener('click', doRestart);
 
@@ -77,8 +79,8 @@ async function doTest() {
     }
     const time = Date.now() - startTime;
     speed = loaded / time * 1000 / 1024 / 1024 * 8;
-    score += oneScore * speed / 100;
-    showItemSpeed(i, Math.round(speed / 20));
+    score += oneScore * speed / MAX_SCORE_SPEED;
+    showItemSpeed(i, Math.round(speed / MAX_SCORE_SPEED * 5));
     await sleep(500);
   }
 

@@ -16,12 +16,23 @@ const port = 3100;
 app.use(express.json());
 
 app.get('/data', async(req, res, next) => {
-  let cases = '../src/data/case';
-  delete require.cache[resolve(cases)];
-  cases = require(cases);
-  let lang = '../src/data/lang';
-  delete require.cache[resolve(lang)];
-  lang = require(lang);
+  let cases, lang;
+  let file = resolve(__dirname, '../src/data/case.json');
+  if (existsSync(file)) {
+    cases = await readFile(file, 'utf8');
+    cases = JSON.parse(cases);
+  } else {
+    file = '../src/data/case';
+    cases = require(file);
+  }
+  file = resolve(__dirname, '../src/data/lang.json');
+  if (existsSync(file)) {
+    lang = await readFile(file, 'utf8');
+    lang = JSON.parse(lang);
+  } else {
+    file = '../src/data/lang';
+    lang = require(file);
+  }
   let baseLang = resolve(__dirname, '../src/data/base-lang');
   if (existsSync(baseLang)) {
     baseLang = await readFile(baseLang, 'utf8');
@@ -39,12 +50,10 @@ app.post('/data', async(req, res, next) => {
   res.setHeader('Content-type', 'application/octet-stream');
 
   const { cases, lang } = req.body;
-  const casesJS = 'module.exports = ' + JSON.stringify(cases, null, '  ') + '\n';
-  let file = resolve(__dirname, '../src/data/case.js');
-  await writeFile(file, casesJS, 'utf8');
-  const langJS = 'module.exports = ' + JSON.stringify(lang, null, '  ') + '\n';
-  file = resolve(__dirname, '../src/data/lang.js');
-  await writeFile(file, langJS, 'utf8');
+  let file = resolve(__dirname, '../src/data/case.json');
+  await writeFile(file, JSON.stringify(cases), 'utf8');
+  file = resolve(__dirname, '../src/data/lang.json');
+  await writeFile(file, JSON.stringify(lang), 'utf8');
 
   res.write('Local data saved. Start to build dist files.\n');
 

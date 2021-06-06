@@ -7,3 +7,6 @@ node_modules
 # build
 dist
 server/public
+
+# log
+src/data/*.json
