@@ -126,6 +126,7 @@ app.post('/data', async(req, res, next) => {
     res.write(`Built ${language} successfully.\n`);
   }
 
+  global.__ = null;
   res.write('Built dist files successfully. Start to upload...');
 
   // try {} catch (e) {}

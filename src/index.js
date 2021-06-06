@@ -53,12 +53,12 @@ async function doTest() {
   await sleep(800);
 
   let score = 0;
-  let oneScore = Math.round(100 / cases.length * 100) / 100;
+  const oneScore = Math.round(100 / cases.length * 100) / 100;
   let speed;
   for (let i = 0, len = cases.length; i < len; i++) {
     const testCase = cases[i];
     progress.innerText = `${i}/${len}`;
-    let startTime = Date.now();
+    const startTime = Date.now();
     let loaded = 0;
     speed = 0;
     try {
