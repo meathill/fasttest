@@ -148,7 +148,6 @@ export default {
       list[index].changed = true;
     }
 
-    const baseLang = {};
     function langToLocalLang(lang) {
       return map(lang, (items, language) => {
         const {
@@ -164,8 +163,15 @@ export default {
         };
       });
     }
+    function toObject(array, target = {}) {
+      for (const key of array) {
+        target[key] = '';
+      }
+      return target;
+    }
 
     const store = useStore();
+    const baseLang = store.state.baseLang ? toObject(store.state.baseLang) : {};
     const list = reactive(store.state.lang ? langToLocalLang(store.state.lang) : []);
 
     watch(store.state, ({ lang, baseLang: langKeys }) => {
@@ -173,9 +179,7 @@ export default {
         return;
       }
       if (langKeys) {
-        for (const key of langKeys) {
-          baseLang[key] = '';
-        }
+        toObject(langKeys, baseLang);
       }
       list.push(...langToLocalLang(lang));
     });
