@@ -4,13 +4,14 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const {DefinePlugin} = require('webpack');
 const base = require('./webpack.config');
 const pkg = require('../package.json');
 
 /* global __dirname */
-const devMode = process.env.NODE_ENV !== 'production';
 
 module.exports = async(language = 'English', path = 'en', cases, langs) => {
+  const devMode = process.env.NODE_ENV !== 'production';
   console.log('Current mode: ', devMode ? 'Development' : 'Production');
   console.log('Current language: ', language);
   langs = mapValues(omit(langs, language), ({ __path }) => __path);
@@ -24,6 +25,9 @@ module.exports = async(language = 'English', path = 'en', cases, langs) => {
       publicPath: devMode || !path ? '/' : `/${path}/`,
     },
     plugins: [
+      new DefinePlugin({
+        devMode,
+      }),
       new HtmlWebpackPlugin({
         template: resolve(__dirname, '../src/template/index.pug'),
         filename: 'index.html',

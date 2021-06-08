@@ -14,6 +14,14 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light.mb-3
             :to="{name: 'i18n'}",
           ) i18n
 
+        li.nav-item
+          a.nav-link(
+            href="https://afasttest.com",
+            target="_blank",
+          )
+            i.bi.bi-speedometer.me-2
+            | Homepage
+
     .ms-auto.d-flex
       .alert.mb-0.me-2.py-1.px-3(
         v-if="message",
@@ -28,6 +36,7 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light.mb-3
         @click="doPublish",
       )
         span.spinner-border.spinner-border-sm.me-2(v-if="isPublishing")
+        i.bi.bi-check-all.me-2(v-else)
         | Publish
 
 router-view

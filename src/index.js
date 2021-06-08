@@ -1,7 +1,7 @@
 import './styl/screen.styl';
 import cases from './data/case';
 
-/* global axios */
+/* global axios, devMode */
 
 const startButton = document.getElementById('go-button');
 const restartButton = document.getElementById('restart-button');
@@ -122,5 +122,16 @@ function showItemError(index) {
   item.classList.add('error');
 }
 
-window.showSpeed = showSpeed;
-window.showItemSpeed = showItemSpeed;
+if (devMode) {
+  window.showSpeed = showSpeed;
+  window.showItemSpeed = showItemSpeed;
+} else {
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-25873290-18');
+}
+
+
+

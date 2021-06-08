@@ -1,6 +1,7 @@
 const { resolve } = require('path');
 const { mapValues } = require('lodash');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const {DefinePlugin} = require('webpack');
 const base = require('./webpack.base.config');
 const pkg = require('../package.json');
 const cases = require('../src/data/case');
@@ -19,6 +20,9 @@ module.exports = async() => {
       publicPath: '/',
     },
     plugins: [
+      new DefinePlugin({
+        devMode: false,
+      }),
       new HtmlWebpackPlugin({
         template: resolve(__dirname, '../src/template/index.pug'),
         filename: 'index.html',
