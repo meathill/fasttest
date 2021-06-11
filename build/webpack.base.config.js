@@ -62,7 +62,7 @@ module.exports = {
   devtool: 'eval-cheap-module-source-map',
   mode: 'development',
   resolve: {
-    extensions: ['.js', '.json', '.vue'],
+    extensions: ['.json', '.js', '.vue'],
     alias: {
       '@': resolve(__dirname, 'src'),
     },
