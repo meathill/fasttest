@@ -32,7 +32,7 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light.mb-3
       ) {{currentStatus}}
       button.btn.btn-primary(
         type="button",
-        :disabled="isPublishing",
+        :disabled="isLoading || isPublishing",
         @click="doPublish",
       )
         span.spinner-border.spinner-border-sm.me-2(v-if="isPublishing")
@@ -54,6 +54,9 @@ import { publish } from '@/service';
 export default {
   setup() {
     async function doPublish() {
+      if (isLoading.value) {
+        return;
+      }
       isPublishing.value = true;
       message.value = status.value = null;
       try {
@@ -74,17 +77,20 @@ export default {
       isPublishing.value = false;
     }
 
+    const isLoading = ref(true);
     const isPublishing = ref(false);
     const status = ref(false);
     const currentStatus = ref('');
     const message = ref('');
     const store = useStore();
 
-    onBeforeMount(() => {
-      store.dispatch(GET_DATA);
+    onBeforeMount(async () => {
+      await store.dispatch(GET_DATA);
+      isLoading.value = false;
     });
 
     return {
+      isLoading,
       isPublishing,
       status,
       message,
