@@ -111,6 +111,7 @@ function showSpeed(speed) {
 }
 function showItemSpeed(index, score) {
   score = score > 5 ? 5 : score;
+  score = score < 1 ? 1 : score;
   const item = document.getElementsByClassName('test-item')[index];
   const stars = item.getElementsByClassName('star');
   for (let i = 0; i < score; i++) {

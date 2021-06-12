@@ -16,7 +16,10 @@ html(lang=path)
   body
     header#header
       .container
-        a.navbar-brand(href="/")
+        a.navbar-brand(
+          href="/",
+          title= __('FastTest')
+        )
           img(src=require('../assets/logo.svg'))
 
         .lang

@@ -8,11 +8,11 @@ const { resolve } = require('path');
 
 const file = resolve(__dirname, '../src/template/index.pug');
 
-const texts = [];
+const texts = new Set();
 
 pug.renderFile(file, {
   __(str) {
-    texts.push(str);
+    texts.add(str);
   },
   require() {
 
@@ -21,9 +21,7 @@ pug.renderFile(file, {
   langs: [],
 });
 
-console.log(texts);
-
 (async() => {
   const baseLang = resolve(__dirname, '../src/data/base-lang');
-  await writeFile(baseLang, texts.join('\n'), 'utf8');
+  await writeFile(baseLang, [...texts].join('\n'), 'utf8');
 })();
