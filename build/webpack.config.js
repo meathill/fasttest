@@ -4,8 +4,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const {DefinePlugin} = require('webpack');
 const base = require('./webpack.base.config');
 const pkg = require('../package.json');
-const cases = require('../src/data/case');
-const lang = require('../src/data/lang');
+const cases = require('../src/data/case.json');
+const lang = require('../src/data/lang.json');
 
 global.__ = value => value;
 

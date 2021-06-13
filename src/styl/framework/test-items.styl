@@ -1,7 +1,6 @@
 .test-items
   display: flex
   flex-wrap: wrap
-  width: 828px
   margin 0 auto
 
   .test-item-title
@@ -12,8 +11,14 @@
     margin: 0
     display: flex
 
-  @media (max-width 575px)
+  @media (max-width $screen-xs-max)
     padding 0 15px
+
+  @media (min-width $screen-sm-min) and (max-width $screen-sm-max)
+    max-width: 828px
+
+  @media (min-width $screen-md-min)
+    max-width: 1112px
 
 .test-item
   background-color: white
@@ -24,10 +29,10 @@
   padding 0 20px
   justify-content: center
 
-  @media (max-width 575px)
+  @media (max-width $screen-xs-max)
     border-radius: 9px
     font-size: 12px
-    width calc((100vw - 30px -10px) / 2)
+    width calc((100vw - 30px - 10px) / 2)
     height 62px
 
     &:nth-child(2n)
@@ -36,16 +41,28 @@
     &:nth-child(n + 3)
       margin-top: 10px
 
-  @media (min-width 576px)
-    border-radius: 14px
-    width: 260px
-    height: 92px
-    margin-right: 24px
+  @media (min-width $screen-sm-min) and (max-width $screen-sm-max)
+    border-radius: .75rem
+    width: calc((100% - 24px * 2) / 3)
+    height: 90px
+    margin-right: 1.5rem
 
     &:nth-child(3n)
       margin-right: 0
 
     &:nth-child(n + 4)
+      margin-top: 24px
+
+  @media (min-width $screen-md-min)
+    border-radius: 1rem
+    width: calc((100% - 24px * 3) / 4)
+    height: 6rem
+    margin-right: 1.5rem
+
+    &:nth-child(4n)
+      margin-right: 0
+
+    &:nth-child(n + 5)
       margin-top: 24px
 
   &.error
