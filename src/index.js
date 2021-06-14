@@ -11,6 +11,8 @@ const clockBg = document.getElementById('clock-color');
 const number = document.getElementById('speed-number');
 const result = document.getElementById('result');
 const progress = document.getElementById('progress');
+const startTitle = document.getElementById('start-title');
+const resultTitle = document.getElementById('result-title');
 
 const MAX_SCORE_SPEED = 50; // 50Mbps = 100
 
@@ -43,6 +45,8 @@ async function doRestart() {
 
   result.classList.add('animated', 'zoomOut');
   await sleep(500);
+  startTitle.hidden = false;
+  resultTitle.hidden = true;
   result.hidden = true;
   result.classList.remove('animated', 'zoomOut');
   await doTest();
@@ -91,6 +95,8 @@ async function doTest() {
   result.hidden = false;
   result.classList.add('animated', 'zoomIn');
   await sleep(100);
+  startTitle.hidden = true;
+  resultTitle.hidden = false;
   result.style.setProperty('--number', Math.round(score).toString());
 }
 function sleep(duration) {

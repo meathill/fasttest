@@ -35,7 +35,8 @@ html(lang=path)
 
     #ads
 
-    h1= __('Test your network speed')
+    h1#start-title= __('Test your network speed')
+    h1#result-title(hidden)= __('Your internet speed index:')
 
     include start.pug
     include testing.pug
