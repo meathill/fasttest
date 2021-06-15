@@ -64,6 +64,7 @@ async function doTest() {
     progress.innerText = `${i}/${len}`;
     const startTime = Date.now();
     let loaded = 0;
+    let error;
     speed = 0;
     try {
       let startTime2 = startTime;
@@ -76,15 +77,17 @@ async function doTest() {
           startTime2 = now;
           showSpeed(Math.round(speed * 100) / 100);
         },
+        timeout: 15,
       });
       progress.innerText = `${i + 1}/${len}`;
     } catch (e) {
+      error = true;
       showItemError(i);
     }
     const time = Date.now() - startTime;
     speed = loaded / time * 1000 / 1024 / 1024 * 8;
     score += oneScore * speed / MAX_SCORE_SPEED;
-    showItemSpeed(i, Math.round(speed / MAX_SCORE_SPEED * 5));
+    showItemSpeed(i, Math.round(speed / MAX_SCORE_SPEED * 5), error);
     await sleep(500);
   }
 
@@ -115,9 +118,11 @@ function showSpeed(speed) {
   const url = URL.createObjectURL(blob);
   clockBg.style['-webkit-mask-image'] = 'url(' + url + ')';
 }
-function showItemSpeed(index, score) {
+function showItemSpeed(index, score, error) {
   score = score > 5 ? 5 : score;
-  score = score < 1 ? 1 : score;
+  if (!error) {
+    score = score < 1 ? 1 : score;
+  }
   const item = document.getElementsByClassName('test-item')[index];
   const stars = item.getElementsByClassName('star');
   for (let i = 0; i < score; i++) {
