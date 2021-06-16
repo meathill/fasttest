@@ -54,14 +54,14 @@
 
 .clock-color
   background no-repeat url(../../assets/clock-full.svg)
-  background-size: contain
+  background-size: 100% auto
   position: absolute
   -webkit-mask-image url(../../assets/mask.svg)
   -webkit-mask-size 100% auto
   transition: -webkit-mask-image .2s
 
   @media (max-width 575px)
-    top 19px
+    top 25px
     left 25px
     width: 270px
     height 238px
@@ -77,7 +77,7 @@
   background-size: 100% auto
   position: absolute
   transition: transform .2s
-  transform: rotate(calc(-135deg + (var(--speed) / 100 * 270deg)))
+  transform: rotate(calc(-137deg + (var(--speed) / 100 * 273.5deg)))
   transform-origin bottom center
 
   @media (max-width 575px)

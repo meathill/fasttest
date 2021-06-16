@@ -21,7 +21,7 @@ module.exports = async() => {
     },
     plugins: [
       new DefinePlugin({
-        devMode: false,
+        devMode: true,
       }),
       new HtmlWebpackPlugin({
         template: resolve(__dirname, '../src/template/index.pug'),
