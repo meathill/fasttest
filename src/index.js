@@ -77,7 +77,7 @@ async function doTest() {
           startTime2 = now;
           showSpeed(Math.round(speed * 100) / 100);
         },
-        timeout: 15,
+        timeout: 15E3,
       });
       progress.innerText = `${i + 1}/${len}`;
     } catch (e) {
