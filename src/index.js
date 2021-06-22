@@ -85,9 +85,9 @@ async function doTest() {
       showItemError(i);
     }
     const time = Date.now() - startTime;
-    speed = loaded / time * 1000 / 1024 / 1024 * 8;
-    score += oneScore * speed / MAX_SCORE_SPEED;
-    showItemSpeed(i, Math.round(speed / MAX_SCORE_SPEED * 5), error);
+    const itemScore = calcScore(loaded, time);
+    score += oneScore * itemScore / 5;
+    showItemSpeed(i, itemScore, error);
     await sleep(500);
   }
 
@@ -101,6 +101,41 @@ async function doTest() {
   startTitle.hidden = true;
   resultTitle.hidden = false;
   result.style.setProperty('--number', Math.round(score).toString());
+}
+
+/**
+ * @see https://github.com/meathill/fasttest/issues/18
+ * @param {number} size
+ * @param {number} time
+ * @return {number}
+ */
+function calcScore(size, time) {
+  const speed = size / time * 1000 / 1024 * 8;
+  if (size <= 10240) { // <= 10k
+    if (speed <= 15) {
+      return 1
+    } else if (speed <= 30) {
+      return 2
+    } else if (speed <= 50) {
+      return 3;
+    } else if (speed <= 200) {
+      return 4;
+    } else {
+      return 5;
+    }
+  } else {
+    if (speed <= 30) {
+      return 1
+    } else if (speed <= 50) {
+      return 2
+    } else if (speed <= 150) {
+      return 3;
+    } else if (speed <= 250) {
+      return 4;
+    } else {
+      return 5;
+    }
+  }
 }
 function sleep(duration) {
   return new Promise(resolve => setTimeout(resolve, duration));
