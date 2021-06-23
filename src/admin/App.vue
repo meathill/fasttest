@@ -84,7 +84,7 @@ export default {
     const message = ref('');
     const store = useStore();
 
-    onBeforeMount(async () => {
+    onBeforeMount(async() => {
       await store.dispatch(GET_DATA);
       isLoading.value = false;
     });

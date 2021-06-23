@@ -14,8 +14,6 @@ const progress = document.getElementById('progress');
 const startTitle = document.getElementById('start-title');
 const resultTitle = document.getElementById('result-title');
 
-const MAX_SCORE_SPEED = 50; // 50Mbps = 100
-
 startButton.addEventListener('click', doStart);
 restartButton.addEventListener('click', doRestart);
 
@@ -85,7 +83,7 @@ async function doTest() {
       showItemError(i);
     }
     const time = Date.now() - startTime;
-    const itemScore = calcScore(loaded, time);
+    const itemScore = error ? 0 : calcScore(loaded, time);
     score += oneScore * itemScore / 5;
     showItemSpeed(i, itemScore, error);
     await sleep(500);
@@ -113,9 +111,9 @@ function calcScore(size, time) {
   const speed = size / time * 1000 / 1024 * 8;
   if (size <= 10240) { // <= 10k
     if (speed <= 15) {
-      return 1
+      return 1;
     } else if (speed <= 30) {
-      return 2
+      return 2;
     } else if (speed <= 50) {
       return 3;
     } else if (speed <= 200) {
@@ -125,9 +123,9 @@ function calcScore(size, time) {
     }
   } else {
     if (speed <= 30) {
-      return 1
+      return 1;
     } else if (speed <= 50) {
-      return 2
+      return 2;
     } else if (speed <= 150) {
       return 3;
     } else if (speed <= 250) {
@@ -173,12 +171,11 @@ if (devMode) {
   window.showSpeed = showSpeed;
   window.showItemSpeed = showItemSpeed;
 } else {
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
+  window.dataLayer = window.dataLayer || []; // eslint-disable-line no-undef
+  function gtag() {
+    dataLayer.push(arguments);
+  }
   gtag('js', new Date());
 
   gtag('config', 'UA-25873290-18');
 }
-
-
-
