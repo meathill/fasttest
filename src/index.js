@@ -171,9 +171,9 @@ if (devMode) {
   window.showSpeed = showSpeed;
   window.showItemSpeed = showItemSpeed;
 } else {
-  window.dataLayer = window.dataLayer || []; // eslint-disable-line no-undef
+  window.dataLayer = window.dataLayer || [];
   function gtag() {
-    dataLayer.push(arguments);
+    dataLayer.push(arguments); // eslint-disable-line no-undef
   }
   gtag('js', new Date());
 
