@@ -5,6 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { DefinePlugin } = require('webpack');
 const marked = require('marked');
 const base = require('./webpack.config');
@@ -51,6 +52,9 @@ module.exports = async(language = 'English', path = 'en', cases, langs, intro) =
       }),
       new MiniCssExtractPlugin({
         filename: '[name].[contenthash].css',
+      }),
+      new CopyWebpackPlugin({
+        patterns: ['manifest.json'],
       }),
     ],
     mode: 'production',

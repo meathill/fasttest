@@ -1,0 +1,48 @@
+{
+  "short_name": "FastTest",
+  "name": "FastTest: How fast is your internet speed?",
+  "icons": [
+    {
+      "src": "/src/assets/logo-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/src/assets/logo-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/?source=pwa",
+  "background_color": "#3367D6",
+  "display": "standalone",
+  "scope": "/",
+  "theme_color": "#f5fafe",
+  "shortcuts": [
+    {
+      "name": "FastTest",
+      "short_name": "FastTest",
+      "description": "How fast is your internet speed?",
+      "url": "/?source=pwa",
+      "icons": [{ "src": "/src/assets/logo-192.png", "sizes": "192x192" }]
+    }
+  ],
+  "description": "How fast is your internet speed? Take our test to connect to dozens of public popular resources to see your results.",
+  "screenshots": [
+    {
+      "src": "/src/assets/screenshot-1.png",
+      "type": "image/png",
+      "sizes": "750x1624"
+    },
+    {
+      "src": "/src/assets/screenshot-2.png",
+      "type": "image/png",
+      "sizes": "750x1624"
+    },
+    {
+      "src": "/src/assets/screenshot-3.png",
+      "type": "image/png",
+      "sizes": "750x1624"
+    }
+  ]
+}

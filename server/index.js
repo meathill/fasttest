@@ -13,6 +13,11 @@ const webpackConfig = require('../build/webpack.config.prod');
 const app = express();
 const port = 3100;
 
+app.options('/data', (req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.end();
+});
+
 app.use(express.json());
 
 app.get('/data', async(req, res, next) => {

@@ -167,6 +167,10 @@ function showItemError(index) {
   item.classList.add('error');
 }
 
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js');
+}
+
 if (devMode) {
   window.showSpeed = showSpeed;
   window.showItemSpeed = showItemSpeed;
