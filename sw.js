@@ -1,14 +1,27 @@
 /* global VERSION */
 
-const version = '0.1.0';
+import pkg from './package.json';
+const {version} = pkg;
 const CACHE_NAME = 'offline';
-const OFFLINE_URL = 'index.html';
+
+function versionLessThan(v1, v2) {
+  v1 = v1.split('.');
+  v2 = v2.split('.');
+  for (let i = 0; i < 3; i++) {
+    if (v1[i] < v2[i]) {
+      return true;
+    } else if (v1[i] > v2[i]) {
+      return false;
+    }
+  }
+  return false;
+}
 
 self.addEventListener('install', event => {
   event.waitUntil(
     (async () => {
-      const cache = await caches.open(CACHE_NAME);
-      await cache.add(new Request(OFFLINE_URL, {cache: 'reload'}));
+      const cache = await caches.open(version);
+      await cache.add(new Request('index.html', {cache: 'reload'}));
     })()
   );
   self.skipWaiting();
@@ -19,6 +32,12 @@ self.addEventListener('activate', event => {
     (async () => {
       if ("navigationPreload" in self.registration) {
         await self.registration.navigationPreload.enable();
+      }
+      const cacheKeys = caches.keys();
+      for (const key of cacheKeys) {
+        if (versionLessThan(key, version)) {
+          await caches.delete(key);
+        }
       }
     })
   );

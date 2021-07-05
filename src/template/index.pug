@@ -7,6 +7,7 @@ html(lang=path || 'en')
     meta(name="renderer" content="webkit")
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
     meta(name="description", content=__('How fast is your internet speed? Take our test to connect to dozens of public popular resources to see your results.'))
+    meta(name="theme-color" content="#f5fafe")
     link(
       rel="shortcut icon",
       type="image/png",
@@ -16,8 +17,12 @@ html(lang=path || 'en')
       rel="manifest",
       href="/manifest.json"
     )
-
+    link(
+      rel="apple-touch-icon",
+      href=require('../assets/logo-192.png'),
+    )
     title= __('FastTest')
+
   body
     header#header
       .container

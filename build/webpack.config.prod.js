@@ -41,6 +41,7 @@ module.exports = async(language = 'English', path = 'en', cases, langs, intro) =
       new HtmlWebpackPlugin({
         template: resolve(__dirname, '../src/template/index.pug'),
         filename: 'index.html',
+        chunk: ['index'],
         templateParameters: {
           cases,
           langs,

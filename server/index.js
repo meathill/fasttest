@@ -87,6 +87,13 @@ app.post('/data', async(req, res, next) => {
         }
         return value;
       };
+    if (language === 'English') {
+      config.entry = {
+        'index': resolve(__dirname, '../src/index.js'),
+        'sw': resolve(__dirname, '../src/sw.js'),
+      };
+
+    }
     const compiler = webpack(config);
     await new Promise((resolve) => {
       compiler.run((err, stats) => {
