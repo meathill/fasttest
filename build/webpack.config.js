@@ -1,7 +1,9 @@
+const {promises: {readFile}} = require('fs');
 const { resolve } = require('path');
 const { mapValues } = require('lodash');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { DefinePlugin } = require('webpack');
+const marked = require('marked');
 const base = require('./webpack.base.config');
 const pkg = require('../package.json');
 const cases = require('../src/data/case.json');
@@ -9,8 +11,13 @@ const lang = require('../src/data/lang.json');
 
 global.__ = value => value;
 
-module.exports = async() => {
+module.exports = async(readIntro = true) => {
   const langs = mapValues(lang, ({ __path }) => __path);
+  let intro = '';
+  if (readIntro) {
+    intro = await readFile(resolve(__dirname, '../src/data/base-info.md'), 'utf8');
+    intro = marked(intro);
+  }
   return {
     ...base,
     entry: resolve(__dirname, '../src/index.js'),
@@ -31,6 +38,7 @@ module.exports = async() => {
           langs,
           version: pkg.version,
           language: 'English',
+          intro,
         },
       }),
     ],

@@ -10,13 +10,13 @@ const pkg = require('../package.json');
 
 /* global __dirname */
 
-module.exports = async(language = 'English', path = 'en', cases, langs) => {
+module.exports = async(language = 'English', path = 'en', cases, langs, intro) => {
   const devMode = process.env.NODE_ENV !== 'production';
   console.log('Current mode: ', devMode ? 'Development' : 'Production');
   console.log('Current language: ', language);
   langs = mapValues(omit(langs, language), ({ __path }) => __path);
   const destDir = resolve(__dirname, `../dist/${path}`);
-  let config = await base();
+  let config = await base(false);
   config = {
     ...config,
     output: {
@@ -37,6 +37,7 @@ module.exports = async(language = 'English', path = 'en', cases, langs) => {
           version: pkg.version,
           language,
           path,
+          intro,
         },
       }),
       new MiniCssExtractPlugin({
