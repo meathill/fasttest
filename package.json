@@ -59,9 +59,8 @@
     "spinkit": "^2.0.1",
     "stylus": "^0.54.8",
     "vue": "^3.1.2",
-    "vue-loader": "^16.2.0",
+    "vue-loader": "^16.3.0",
     "vue-router": "^4.0.10",
-    "vuex": "^4.0.2",
-    "workbox": "0.0.0"
+    "vuex": "^4.0.2"
   }
 }
