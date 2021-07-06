@@ -7,10 +7,10 @@
       v-for="(langItem, index) in list",
       @submit.prevent="doSave(index)",
     )
-      table.table.table-bordered
-        tbody(v-if="langItem.isEditing")
+      table.table.table-bordered(v-if="langItem.isEditing")
+        tbody
           tr
-            th Language
+            th.w-50 Language
             td
               input.form-control(
                 v-model="langItem.language",
@@ -23,12 +23,26 @@
                 v-model="langItem.path",
                 required,
               )
+        tbody.border-t-2
           tr(v-for="(value, key) in langItem.items")
-            th {{key}}
+            th
+              label(:for="'t-' + index + '-f-' + key") {{key}}
             td
               input.form-control(
+                :id="'t-' + index + '-f-' + key",
                 v-model="langItem.items[key]",
               )
+        tbody.border-t-2
+          tr
+            th
+              label(:for="'t-' + index + '-intro'") Introduction
+            td
+              textarea.form-control(
+                :id="'t-' + index + '-intro'",
+                rows="5",
+                v-model="langItem.intro",
+              )
+        tbody.border-t-2
           tr
             td(colspan="2")
               .btn-group-sm
@@ -44,16 +58,23 @@
                 )
                   i.bi.bi-x
 
-        tbody(v-else)
+      table.table.table-bordered(v-else)
+        tbody
           tr
-            th Language
+            th.w-50 Language
             td {{langItem.language}}
           tr
             th Path
             td {{langItem.path}}
+        tbody.border-t-2
           tr(v-for="(value, key) in langItem.items")
             th {{key}}
             td {{value}}
+        tbody.border-t-2
+          tr
+            th Introduction
+            td.pre-wrap {{langItem.intro}}
+        tbody.border-t-2
           tr
             td(colspan="2")
               .btn-group-sm
@@ -115,10 +136,12 @@ export default {
           items,
           language,
           path,
+          intro,
         } = item;
         items = isEditing && backup ? backup : items;
         memo[language] = {
           __path: path,
+          __intro: intro,
           ...items,
         };
         return memo;
@@ -152,6 +175,7 @@ export default {
       return map(lang, (items, language) => {
         const {
           __path,
+          __intro,
           ...rest
         } = items;
         items = rest;
@@ -160,6 +184,7 @@ export default {
           path: __path,
           items: Object.assign({}, baseLang, items),
           isEditing: false,
+          intro: __intro,
         };
       });
     }
