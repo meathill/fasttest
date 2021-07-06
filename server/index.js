@@ -66,10 +66,10 @@ app.post('/data', async(req, res, next) => {
     const item = lang[language];
     const {
       __path,
-      intro,
+      __intro,
       ...po
     } = item;
-    const config = await webpackConfig(language, __path, cases, lang, intro);
+    const config = await webpackConfig(language, __path, cases, lang, __intro);
     const missing = [];
     global.__ = language === 'English'
       ? value => value

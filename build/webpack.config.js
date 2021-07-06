@@ -1,4 +1,4 @@
-const {promises: {readFile}} = require('fs');
+const { promises: { readFile } } = require('fs');
 const { resolve } = require('path');
 const { mapValues } = require('lodash');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
