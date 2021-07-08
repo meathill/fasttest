@@ -17,7 +17,7 @@ module.exports = async(language = 'English', path = 'en', cases, langs, intro) =
   console.log('Current mode: ', devMode ? 'Development' : 'Production');
   console.log('Current language: ', language);
   langs = mapValues(omit(langs, language), ({ __path }) => __path);
-  if (language === 'English') {
+  if (language === 'English' && !intro) {
     intro = await readFile(resolve(__dirname, '../src/data/base-info.md'), 'utf8');
   }
   if (intro) {

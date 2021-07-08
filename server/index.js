@@ -58,9 +58,13 @@ app.post('/data', async(req, res, next) => {
   res.write('Local data saved. Start to build dist files.\n');
 
   process.env.NODE_ENV = 'production';
-  lang.English = {
-    __path: '',
-  };
+  if (lang.English) {
+    lang.English.__path = '';
+  } else {
+    lang.English = {
+      __path: '',
+    };
+  }
   for (const language in lang) {
     res.write('Start to build ' + language + '\n');
     const item = lang[language];
@@ -71,17 +75,15 @@ app.post('/data', async(req, res, next) => {
     } = item;
     const config = await webpackConfig(language, __path, cases, lang, __intro);
     const missing = [];
-    global.__ = language === 'English'
-      ? value => value
-      : function(value) {
-        if (po && po[value]) {
-          return po[value];
-        } else {
-          console.warn(`[i18n: ${language}] no translation: ${value}`);
-          missing.push(value);
-        }
-        return value;
-      };
+    global.__ = function(value) {
+      if (po && po[value]) {
+        return po[value];
+      } else {
+        console.warn(`[i18n: ${language}] no translation: ${value}`);
+        missing.push(value);
+      }
+      return value;
+    };
     const compiler = webpack(config);
     await new Promise((resolve) => {
       compiler.run((err, stats) => {
