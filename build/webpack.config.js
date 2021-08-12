@@ -1,4 +1,9 @@
-const { promises: { readFile } } = require('fs');
+const {
+  promises: {
+     readFile,
+  },
+  existsSync,
+} = require('fs');
 const { resolve } = require('path');
 const { mapValues } = require('lodash');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -6,8 +11,18 @@ const { DefinePlugin } = require('webpack');
 const marked = require('marked');
 const base = require('./webpack.base.config');
 const pkg = require('../package.json');
-const cases = require('../src/data/case.json');
-const lang = require('../src/data/lang.json');
+
+let cases, lang;
+if (existsSync(resolve(__dirname, '../src/data/cases.json'))) {
+  cases = require('../src/data/cases.json');
+} else {
+  cases = require('../src/data/case.js');
+}
+if (existsSync(resolve(__dirname, '../src/data/lang.json'))) {
+  lang = require('../src/data/lang.json');
+} else {
+  lang = require('../src/data/lang.js');
+}
 
 global.__ = value => value;
 
